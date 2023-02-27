@@ -1,4 +1,4 @@
-package com.joeblakeb.task5a
+package com.joeblakeb.connectfour
 
 import android.content.Context
 import android.graphics.Canvas
@@ -7,7 +7,7 @@ import android.graphics.Paint
 import android.util.AttributeSet
 import android.view.View
 
-class Connect4View : View {
+class GridView : View {
     private val colCount get() = 7
     private val rowCount get() = 6
 

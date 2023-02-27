@@ -12,5 +12,5 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-rootProject.name = "Task5a"
+rootProject.name = "ConnectFour"
 include ':app'

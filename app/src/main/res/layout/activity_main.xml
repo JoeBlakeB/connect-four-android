@@ -7,8 +7,8 @@
     android:background="#00304A"
     tools:context=".MainActivity">
 
-    <com.joeblakeb.task5a.Connect4View
-        android:id="@+id/connect4View"
+    <com.joeblakeb.connectfour.GridView
+        android:id="@+id/gridView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="16dp"

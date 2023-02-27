@@ -1,4 +1,4 @@
-package com.joeblakeb.task5a
+package com.joeblakeb.connectfour
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

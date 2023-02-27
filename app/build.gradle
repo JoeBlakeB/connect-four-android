@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace 'com.joeblakeb.task5a'
+    namespace 'com.joeblakeb.connectfour'
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.joeblakeb.task5a"
+        applicationId "com.joeblakeb.connectfour"
         minSdk 19
         targetSdk 33
         versionCode 1
