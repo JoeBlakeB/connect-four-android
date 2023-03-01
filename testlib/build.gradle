@@ -1,0 +1,20 @@
+plugins {
+    id 'java-library'
+    id 'org.jetbrains.kotlin.jvm'
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
+
+compileKotlin {
+    kotlinOptions.jvmTarget = "1.8"
+}
+
+dependencies {
+    implementation("org.junit.jupiter:junit-jupiter:5.9.2")
+    implementation("org.junit.jupiter:junit-jupiter-params:5.9.2")
+
+    implementation(project(":lib"))
+}
