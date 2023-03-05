@@ -1,11 +1,10 @@
 package com.joeblakeb.logic
 
 import com.joeblakeb.lib.ConnectFourGameInterface
-import org.junit.jupiter.api.Assertions.*
 
-import com.joeblakeb.testlib.ConnectFourTest
+import com.joeblakeb.testlib.ConnectFourGameTest
 
-internal class ConnectFourGameLogicTest : ConnectFourTest() {
+internal class ConnectFourGameLogicTest : ConnectFourGameTest() {
     override fun createGame(columns: Int, rows: Int): ConnectFourGameInterface {
         return ConnectFourGameLogic()
     }

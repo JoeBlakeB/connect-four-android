@@ -1,15 +1,27 @@
 package com.joeblakeb.connectfour
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.util.AttributeSet
+import android.view.GestureDetector
+import android.view.MotionEvent
 import android.view.View
+import androidx.core.view.GestureDetectorCompat
+import com.joeblakeb.logic.ConnectFourGameLogic
 
 class GridView : View {
-    private val colCount get() = 7
-    private val rowCount get() = 6
+    private var gameLogic: ConnectFourGameLogic = ConnectFourGameLogic()
+        set(value) {
+            field = value
+            recalculateDimensions()
+            invalidate()
+        }
+
+    private val colCount:Int get() = gameLogic.columns
+    private val rowCount:Int get() = gameLogic.rows
 
     private var gridLeft: Float = 0f
     private var gridTop: Float = 0f
@@ -23,6 +35,16 @@ class GridView : View {
     private val gridPaint: Paint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         style = Paint.Style.FILL
         color = 0xFF00304A.toInt()
+    }
+
+    private val playerOnePaint: Paint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+        style = Paint.Style.FILL
+        color = 0xFFF21B3F.toInt()
+    }
+
+    private val playerTwoPaint: Paint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+        style = Paint.Style.FILL
+        color = 0xFFEDE72C.toInt()
     }
 
     private val noPlayerPaint: Paint= Paint(Paint.ANTI_ALIAS_FLAG).apply {
@@ -51,7 +73,12 @@ class GridView : View {
             val cy = gridTop + circleSpacing + ((circleDiameter + circleSpacing) * row) + radius
 
             for (col in 0 until colCount) {
-                val paint = noPlayerPaint
+                val paint = when (gameLogic.getToken(col, row)) {
+                    1 -> playerOnePaint
+                    2 -> playerTwoPaint
+                    else -> noPlayerPaint
+                }
+
                 val cx = gridLeft + circleSpacing + ((circleDiameter + circleSpacing) * col) + radius
 
                 canvas?.drawCircle(cx, cy, radius, paint)
@@ -73,4 +100,27 @@ class GridView : View {
         gridTop = (h - gridHeight)/2
         gridBottom = gridTop + gridHeight
     }
+
+    private val gestureDetector = GestureDetectorCompat(context, object:
+        GestureDetector.SimpleOnGestureListener() {
+
+        override fun onDown(e: MotionEvent): Boolean = true
+
+        override fun onSingleTapUp(e: MotionEvent): Boolean {
+            val columnTouched = ((e.x - gridLeft - circleSpacing * 0.5f) / (circleSpacing + circleDiameter)).toInt()
+
+            return if (columnTouched in 0 until gameLogic.columns) {
+                gameLogic.playToken(columnTouched)
+                invalidate()
+                true
+            } else {
+                false
+            }
+        }
+    })
+
+    override fun onTouchEvent(event: MotionEvent): Boolean {
+        return gestureDetector.onTouchEvent(event) || super.onTouchEvent(event)
+    }
+
 }

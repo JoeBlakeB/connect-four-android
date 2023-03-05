@@ -5,8 +5,8 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
-abstract class ConnectFourTest {
-    lateinit var defaultGame: ConnectFourGameInterface
+abstract class ConnectFourGameTest {
+    private lateinit var defaultGame: ConnectFourGameInterface
 
     abstract fun createGame(columns: Int, rows: Int): ConnectFourGameInterface
 
