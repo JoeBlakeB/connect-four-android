@@ -1,6 +1,5 @@
 package com.joeblakeb.connectfour
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
@@ -10,15 +9,21 @@ import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.View
 import androidx.core.view.GestureDetectorCompat
+import com.joeblakeb.lib.ConnectFourGameInterface
 import com.joeblakeb.logic.ConnectFourGameLogic
 
 class GridView : View {
+
     private var gameLogic: ConnectFourGameLogic = ConnectFourGameLogic()
         set(value) {
             field = value
             recalculateDimensions()
             invalidate()
         }
+
+    private val gameChangeListener: ConnectFourGameInterface.GameChangeListener = ConnectFourGameInterface.GameChangeListener {
+        invalidate()
+    }
 
     private val colCount:Int get() = gameLogic.columns
     private val rowCount:Int get() = gameLogic.rows
@@ -52,6 +57,10 @@ class GridView : View {
         color = Color.WHITE
     }
 
+    init {
+        gameLogic.addGameChangeListener(gameChangeListener)
+    }
+
     constructor(context: Context?) : super(context)
     constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs)
     constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) :
@@ -70,7 +79,7 @@ class GridView : View {
         val radius = circleDiameter / 2f
 
         for (row in 0 until rowCount) {
-            val cy = gridTop + circleSpacing + ((circleDiameter + circleSpacing) * row) + radius
+            val cy = gridTop + circleSpacing + ((circleDiameter + circleSpacing) * (rowCount - row)) + radius
 
             for (col in 0 until colCount) {
                 val paint = when (gameLogic.getToken(col, row)) {
@@ -122,5 +131,4 @@ class GridView : View {
     override fun onTouchEvent(event: MotionEvent): Boolean {
         return gestureDetector.onTouchEvent(event) || super.onTouchEvent(event)
     }
-
 }
