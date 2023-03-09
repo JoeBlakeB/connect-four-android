@@ -6,6 +6,9 @@ interface ConnectFourGameInterface {
     /** The height of the game, conventionally 6 */
     val rows: Int
 
+    /** Determines the player who's turn it currently is. */
+    val playerTurn: Int
+
     /** Returns the state of the game grid at a specified column and row number. */
     fun getToken(column: Int, row: Int): Int
 

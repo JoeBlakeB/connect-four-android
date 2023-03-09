@@ -12,7 +12,7 @@ abstract class ConnectFourGameTest {
 
     @BeforeEach
     fun createTestGrid() {
-        defaultGame = createGame(8, 10)
+        defaultGame = createGame(7, 6)
     }
 
     @Test
@@ -27,23 +27,24 @@ abstract class ConnectFourGameTest {
 
     @Test
     fun testPlayToken() {
-        defaultGame.playToken(0, 1)
+        for (i in 1..2) {
+            assertEquals(i, defaultGame.playerTurn)
+            defaultGame.playToken(0, false)
+            assertEquals(i, defaultGame.getToken(0, 5))
+            assertEquals(0, defaultGame.getToken(0, 4))
+
+            assertEquals(0, defaultGame.playerTurn)
+            assertEquals(1, defaultGame.playToken(0, false))
+
+            for (j in 5 downTo i) {
+                defaultGame.dropTokenContinue(0, j, false)
+                assertEquals(i, defaultGame.getToken(0, j - 1))
+                assertEquals(0, defaultGame.getToken(0, j))
+            }
+        }
+
         assertEquals(1, defaultGame.getToken(0, 0))
-        assertEquals(0, defaultGame.getToken(0, 1))
-
-        defaultGame.playToken(1, 2)
-        assertEquals(2, defaultGame.getToken(1, 0))
-        assertEquals(0, defaultGame.getToken(2, 0))
-
-        defaultGame.playToken(0, 1)
-        assertEquals(1, defaultGame.getToken(0,1))
-        assertEquals(1, defaultGame.getToken(0,0))
-        assertEquals(0, defaultGame.getToken(0,2))
-
-        defaultGame.playToken(0, 2)
-        assertEquals(2, defaultGame.getToken(0,2))
-        assertEquals(1, defaultGame.getToken(0,1))
-        assertEquals(1, defaultGame.getToken(0,0))
-        assertEquals(0, defaultGame.getToken(0,3))
+        assertEquals(0, defaultGame.getToken(1, 0))
+        assertEquals(1, defaultGame.playerTurn)
     }
 }

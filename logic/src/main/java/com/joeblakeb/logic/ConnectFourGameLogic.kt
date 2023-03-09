@@ -16,10 +16,7 @@ class ConnectFourGameLogic (
      */
     private var data: Array<IntArray> = Array(columns) { IntArray(rows) { 0 } }
 
-    /**
-     * Determines the player who's turn it currently is.
-     */
-    var playerTurn: Int = 1
+    override var playerTurn: Int = 1
         private set
 
     /**
