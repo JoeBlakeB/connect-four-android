@@ -22,7 +22,7 @@ class GridView : View {
         }
 
     private val gameChangeListener: ConnectFourGameInterface.GameChangeListener = ConnectFourGameInterface.GameChangeListener {
-        invalidate()
+        postInvalidate()
     }
 
     private val colCount:Int get() = gameLogic.columns
@@ -79,7 +79,7 @@ class GridView : View {
         val radius = circleDiameter / 2f
 
         for (row in 0 until rowCount) {
-            val cy = gridTop + circleSpacing + ((circleDiameter + circleSpacing) * (rowCount - row)) + radius
+            val cy = gridTop + circleSpacing + ((circleDiameter + circleSpacing) * (rowCount - row - 1)) + radius
 
             for (col in 0 until colCount) {
                 val paint = when (gameLogic.getToken(col, row)) {
